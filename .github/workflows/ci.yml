@@ -29,8 +29,6 @@ jobs:
       run: |
         cmake -B build
         cmake --build build
-        cmake ..
-        make
         
     # 第4步：运行我们在 main.c 里写的测试
     - name: 运行自动化测试 (Run Tests)
