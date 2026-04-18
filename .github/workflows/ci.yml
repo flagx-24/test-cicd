@@ -1,0 +1,37 @@
+name: C/C++ CI Pipeline # 流水线的名字
+
+# 触发器：什么时候启动流水线？
+# 只要有人向 main 分支 push 代码，或者发起合并请求（PR），就自动运行。
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# 任务列表：流水线要干什么？
+jobs:
+  build-and-test:
+    # 租用一台云端电脑，操作系统是最新的 Ubuntu
+    runs-on: ubuntu-latest
+    
+    # 机器人执行的具体步骤
+    steps:
+    # 第1步：把你在 GitHub 上的代码下载到这台云端电脑里
+    - name: 检出代码 (Checkout)
+      uses: actions/checkout@v4
+      
+    # 第2步：安装编译工具 CMake（Ubuntu自带gcc，所以不需要额外装）
+    - name: 安装 CMake
+      run: sudo apt-get update && sudo apt-get install -y cmake
+      
+    # 第3步：执行构建（和你在本地敲命令一模一样）
+    - name: 编译代码 (Build)
+      run: |
+        cmake -B build
+        cmake --build build
+        cmake ..
+        make
+        
+    # 第4步：运行我们在 main.c 里写的测试
+    - name: 运行自动化测试 (Run Tests)
+      run: ./build/test_app
