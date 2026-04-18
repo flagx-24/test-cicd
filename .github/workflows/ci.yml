@@ -18,7 +18,7 @@ jobs:
     steps:
     # 第1步：把你在 GitHub 上的代码下载到这台云端电脑里
     - name: 检出代码 (Checkout)
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       
     # 第2步：安装编译工具 CMake（Ubuntu自带gcc，所以不需要额外装）
     - name: 安装 CMake
